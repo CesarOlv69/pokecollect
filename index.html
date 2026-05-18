@@ -1277,6 +1277,7 @@ const eu  = v => v==null?'—':Number(v).toLocaleString('fr-FR',{style:'currency
 const pct = v => (v>=0?'+':'')+v.toFixed(1)+'%';
 const pn  = v => { if(!v) return 0; return parseFloat(String(v).replace(/[^0-9.,\-]/g,'').replace(',','.'))||0; };
 const esc = s => (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/"/g,'&quot;');
+const attr = v => JSON.stringify(v).replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 
 /* Animated counter */
 function animateCount(el, end, dur=1400, prefix='', suffix='') {
@@ -1433,7 +1434,7 @@ function buildDash() {
     .sort((a,b)=>b._p-a._p).slice(0,8);
   document.getElementById('dashTop').innerHTML = top.map((d,i)=>{
     const rk = ['rk1','rk2','rk3','rkn','rkn','rkn','rkn','rkn'][i];
-    return `<div class="top-item" onclick="openSByArt('${esc(d.art).replace(/'/g,"\\'")}')">
+    return `<div class="top-item" onclick="openSByArt(${attr(d.art)})">
       <div class="top-rk ${rk}">${i+1}</div>
       <div class="top-info">
         <div class="top-name">${esc(d.art)}</div>
@@ -1457,7 +1458,7 @@ function openSByArt(art) {
 function buildSellees() {
   const sers=['all',...new Set(DS.map(d=>d.ser).filter(Boolean).sort())];
   document.getElementById('sChips').innerHTML = sers.map(s=>`
-    <div class="chip${s===fSerS?' on':''}" onclick="setFS(${JSON.stringify(s)})">${s==='all'?'Toutes':esc(s)}</div>`).join('');
+    <div class="chip${s===fSerS?' on':''}" onclick="setFS(${attr(s)})">${s==='all'?'Toutes':esc(s)}</div>`).join('');
   renderS();
 }
 function setFS(s){ fSerS=s; buildSellees(); }
@@ -1532,10 +1533,10 @@ function sGalCard(d,i){
 function buildCartes() {
   const lngs=['all',...new Set(DC.map(d=>d.lng).filter(Boolean).sort())];
   document.getElementById('cLngChips').innerHTML = lngs.map(l=>`
-    <div class="chip${l===fLng?' on':''}" onclick="setFL(${JSON.stringify(l)})">${l==='all'?'Toutes langues':lngLbl(l)}</div>`).join('');
+    <div class="chip${l===fLng?' on':''}" onclick="setFL(${attr(l)})">${l==='all'?'Toutes langues':lngLbl(l)}</div>`).join('');
   const sers=['all',...new Set(DC.map(d=>d.ser).filter(Boolean).sort())];
   document.getElementById('cSerChips').innerHTML = sers.map(s=>`
-    <div class="chip${s===fSerC?' on':''}" onclick="setFC(${JSON.stringify(s)})">${s==='all'?'Toutes séries':esc(s)}</div>`).join('');
+    <div class="chip${s===fSerC?' on':''}" onclick="setFC(${attr(s)})">${s==='all'?'Toutes séries':esc(s)}</div>`).join('');
   renderC();
 }
 function setFL(l){ fLng=l; buildCartes(); }
