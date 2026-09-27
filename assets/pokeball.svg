@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Poké Ball rouge et blanche">
+<defs>
+ <radialGradient id="red" cx="32%" cy="20%" r="85%"><stop stop-color="#ff6970"/><stop offset=".4" stop-color="#ed2836"/><stop offset="1" stop-color="#aa101f"/></radialGradient>
+ <radialGradient id="white" cx="35%" cy="30%" r="80%"><stop stop-color="#fff"/><stop offset=".65" stop-color="#f0f1f3"/><stop offset="1" stop-color="#a5adb8"/></radialGradient>
+ <radialGradient id="button" cx="35%" cy="25%" r="85%"><stop stop-color="#fff"/><stop offset="1" stop-color="#cbd0d7"/></radialGradient>
+ <clipPath id="ball"><circle cx="60" cy="60" r="53"/></clipPath>
+</defs>
+<circle cx="60" cy="60" r="56" fill="#171b20"/>
+<g clip-path="url(#ball)">
+ <path d="M5 5h110v55H5z" fill="url(#red)"/>
+ <path d="M5 60h110v55H5z" fill="url(#white)"/>
+ <path d="M5 55h110v10H5z" fill="#171b20"/>
+ <ellipse cx="40" cy="28" rx="20" ry="9" transform="rotate(-28 40 28)" fill="#fff" opacity=".24"/>
+</g>
+<circle cx="60" cy="60" r="18" fill="#171b20"/>
+<circle cx="60" cy="60" r="12.5" fill="url(#button)"/>
+<circle cx="60" cy="60" r="8.5" fill="none" stroke="#b7bec7" stroke-width="1.2"/>
+</svg>
