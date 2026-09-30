@@ -7,7 +7,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="PokeApp">
 <meta name="theme-color" content="#06070C">
-<title>PokeApp · Collection</title>
+<title>PokéCollect · Votre collection</title>
 
 <!-- Logo iPhone home-screen (rename ton logo en icon.png) -->
 <link rel="apple-touch-icon" href="icon.png">
@@ -1542,6 +1542,7 @@ body {
 
 </style>
 <link rel="stylesheet" href="refinement.css">
+<link rel="stylesheet" href="collection.css">
 </head>
 <body>
 
@@ -1555,7 +1556,7 @@ body {
   <div class="sp-ball">
     <img crossorigin="anonymous" referrerpolicy="no-referrer" src="assets/pokeball.svg" alt="Poké Ball" width="112" height="112">
   </div>
-  <div class="sp-logo"><span class="a">Poke</span><span class="b">App</span></div>
+  <div class="sp-logo"><span class="a">Poke</span><span class="b">Collect</span></div>
   <div class="sp-bar"><div></div></div>
   <div class="sp-txt">Votre collection, réunie.</div>
 </div>
@@ -1570,7 +1571,7 @@ body {
         <div class="brand-ball">
           <img crossorigin="anonymous" referrerpolicy="no-referrer" src="assets/pokeball.svg" alt="Poké Ball" width="28" height="28">
         </div>
-        <div class="brand-text"><span class="a">Poke</span><span class="b">App</span></div>
+        <div class="brand-text"><span class="a">Poke</span><span class="b">Collect</span></div>
       </div>
       <div class="sync" id="syncBtn" onclick="syncData()">
         <div class="sync-dot" id="sDot"></div>
@@ -1778,7 +1779,7 @@ body {
       <div class="nav-indicator" id="navInd"></div>
       <div class="ni on" data-tab="dash" onclick="goTab('dash',this)">
         <div class="ni-pill"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg></div>
-        <div class="ni-lbl">Dashboard</div>
+        <div class="ni-lbl">Vue d’ensemble</div>
       </div>
       <div class="ni" data-tab="scelles" onclick="goTab('scelles',this)">
         <div class="ni-pill"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg></div>
@@ -1794,7 +1795,7 @@ body {
       </div>
       <div class="ni" data-tab="stats" onclick="goTab('stats',this)">
         <div class="ni-pill"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg></div>
-        <div class="ni-lbl">Stats</div>
+        <div class="ni-lbl">Analyses</div>
       </div>
     </div>
   </nav>
@@ -1957,7 +1958,7 @@ function parseS(rows) {
     if(!art||art.length<2||/total|totaux/i.test(art)) continue;
     const qty=pn(r[3]),ach=pn(r[4]),ven=pn(r[6]);
     if(qty===0&&ach===0) continue;
-    res.push({art,ser:(r[2]||'').trim(),qty,ach,ven,img:remoteImageURL(r[14])});
+    res.push({art,ser:(r[2]||'').trim(),qty,ach,hasCost:/[0-9]/.test(String(r[4]||'')),ven,img:remoteImageURL(r[14])});
   }
   return res;
 }
@@ -1969,7 +1970,7 @@ function parseC(rows) {
     if(!nom||nom.length<2||/total|totaux/i.test(nom)||/nom de|article|^#$/.test(nom.toLowerCase())) continue;
     const val=pn(r[9]), qty=pn(r[6])||1, ach=pn(r[7])||null;
     if(val===0&&!ach) continue;
-    res.push({nom,num:(r[2]||'').trim(),ser:(r[3]||'').trim(),lng:(r[4]||'').trim(),ett:(r[5]||'').trim(),qty,ach,val,img:remoteImageURL(r[12])});
+    res.push({nom,num:(r[2]||'').trim(),ser:(r[3]||'').trim(),lng:(r[4]||'').trim(),ett:(r[5]||'').trim(),qty,ach,hasCost:/[0-9]/.test(String(r[7]||'')),val,img:remoteImageURL(r[12])});
   }
   return res;
 }
@@ -2120,7 +2121,7 @@ function sListCard(d,i){
 function sGalCard(d,i){
   const pfc=d._p>0?'bdg-g':d._p<0?'bdg-r':'bdg-gy';
   const sc=d.ven>=d.ach?'var(--g)':'var(--r-bright)';
-  const img=d.img?`<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.art)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.opacity='0.1'">`:'';
+  const img=d.img?`<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.art)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`:'';
   return `<div class="s-gal-card" onclick="openS(${i})">
     <div class="s-gal-img">
       ${img}
@@ -2576,7 +2577,7 @@ function showStage1(boosterId) {
   document.getElementById('opBg').classList.remove('intense');
   document.getElementById('opSkip').style.display = 'none';
   stage.innerHTML = `
-    <div class="op-pack" id="opPack" onclick="startTear()">
+    <div class="op-pack" id="opPack" style="--pack-ratio:${boosterId==='harmonie'?408:420}/800" onclick="startTear()">
       <img crossorigin="anonymous" referrerpolicy="no-referrer" src="${b.img}" alt="${b.name}">
       <div class="pack-strip" style="background-image:url('${b.img}')"></div>
     </div>`;
@@ -2692,7 +2693,7 @@ function flipCard(idx) {
 
   openingDelay(() => card.classList.add('revealed'), 600);
 
-  document.getElementById('opHint').textContent = (idx < 4) ? 'Suivant' : 'Touche pour continuer';
+  document.getElementById('opHint').textContent = (idx < _opCards.length - 1) ? 'Suivant' : 'Touche pour continuer';
 
   // Setup next click to advance
   openingDelay(() => {
@@ -2905,5 +2906,7 @@ addEventListener('DOMContentLoaded', () => {
   setInterval(()=>{ const t=document.getElementById('hTime'); if (t) t.textContent = timeNow(); }, 30000);
 });
 </script>
+<script src="cardmarket.js"></script>
+<script src="collection.js"></script>
 </body>
 </html>
