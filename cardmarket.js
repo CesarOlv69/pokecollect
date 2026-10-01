@@ -470,6 +470,17 @@ function cardmarketNormalize(value){return String(value||'').normalize('NFKC').t
 function cardmarketKey(d){return [d.nom,d.num,d.ser,d.lng].map(cardmarketNormalize).join('|')}
 const cardmarketIndex=new Map(cardmarketRecords.map(d=>[cardmarketKey(d),d]));
 function cardmarketLink(d){
+ // When the sheet contains the column, it is the sole source of links.
+ if(Object.prototype.hasOwnProperty.call(d,'cardmarket')){
+  try{
+   const url=new URL(d.cardmarket);
+   if(url.protocol!=='https:'||!['www.cardmarket.com','cardmarket.com'].includes(url.hostname)||url.username||url.password||!/^\/[a-z]{2}\/Pokemon\/Products\/Singles\/[^/]+\/[^/]+\/?$/.test(url.pathname))return null;
+   const record=cardmarketIndex.get(cardmarketKey(d));
+   return {url:url.href,note:record&&url.pathname.endsWith('/'+record.path)?record.note:''};
+  }catch{return null;}
+ }
+ // Compatibility with older sheet versions without the Cardmarket column.
+
  const record=cardmarketIndex.get(cardmarketKey(d));
  if(!record)return null;
  return {url:'https://www.cardmarket.com/fr/Pokemon/Products/Singles/'+record.path,note:record.note};

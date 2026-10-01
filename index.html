@@ -1964,13 +1964,14 @@ function parseS(rows) {
 }
 function parseC(rows) {
   let hi=rows.findIndex(r=>r.some(c=>(c||'').toLowerCase().includes('nom de'))); if(hi===-1) hi=4;
+  const cmColumn=(rows[hi]||[]).findIndex(c=>/^(?:lien |url )?card\s*market(?: url| lien)?$/i.test(String(c||'').trim()));
   const res=[];
   for(let i=hi+1;i<rows.length;i++) {
     const r=rows[i], nom=(r[1]||'').trim();
     if(!nom||nom.length<2||/total|totaux/i.test(nom)||/nom de|article|^#$/.test(nom.toLowerCase())) continue;
     const val=pn(r[9]), qty=pn(r[6])||1, ach=pn(r[7])||null;
     if(val===0&&!ach) continue;
-    res.push({nom,num:(r[2]||'').trim(),ser:(r[3]||'').trim(),lng:(r[4]||'').trim(),ett:(r[5]||'').trim(),qty,ach,hasCost:/[0-9]/.test(String(r[7]||'')),val,img:remoteImageURL(r[12])});
+    res.push({nom,num:(r[2]||'').trim(),ser:(r[3]||'').trim(),lng:(r[4]||'').trim(),ett:(r[5]||'').trim(),qty,ach,hasCost:/[0-9]/.test(String(r[7]||'')),val,img:remoteImageURL(r[12]),...(cmColumn>=0?{cardmarket:String(r[cmColumn]||'').trim()}: {})});
   }
   return res;
 }

@@ -98,5 +98,5 @@ openC=function(i){
  const d=_vc[i];if(!d)return;
  cardDetail(i);
  const link=cardmarketLink(d);
- document.getElementById('shtB').insertAdjacentHTML('beforeend',`<div class="det-row"><span class="det-lbl">Bénéfice potentiel / carte</span><span class="det-val">${money(d.val-(d.ach||0))}</span></div>${link?`<a class="cardmarket-link" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">Voir sur Cardmarket <span>↗</span></a>${link.note?`<p class="cardmarket-note">${esc(link.note)}</p>`:''}`:'<p class="cardmarket-note">Fiche Cardmarket non vérifiée pour cette référence.</p>'}`);
+ document.getElementById('shtB').insertAdjacentHTML('beforeend',`<div class="det-row"><span class="det-lbl">Bénéfice potentiel / carte</span><span class="det-val">${money(d.val-(d.ach||0))}</span></div>${link?`<a class="cardmarket-link" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">Voir sur Cardmarket <span>↗</span></a>${link.note?`<p class="cardmarket-note">${esc(link.note)}</p>`:''}`:'<p class="cardmarket-note">Aucun lien Cardmarket renseigné.</p>'}`);
 };
