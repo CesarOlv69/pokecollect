@@ -2,7 +2,7 @@
 let trendHistory=[],trendChart=null,trendPending=null,trendSelected='',trendRange='all';
 try{trendHistory=JSON.parse(localStorage.getItem('pc-price-history-v1')||'[]');if(!Array.isArray(trendHistory))trendHistory=[]}catch{trendHistory=[]}
 const trendSection=document.createElement('section');trendSection.id='tab-trends';trendSection.className='tab';document.getElementById('tab-cartes').after(trendSection);
-const trendNav=document.createElement('button');trendNav.className='ni';trendNav.dataset.tab='trends';trendNav.innerHTML='<span aria-hidden="true">↗</span><span>Tendance prix</span>';trendNav.onclick=()=>{jump('trends');renderTrends()};document.querySelector('.nav .sidebar-footer').before(trendNav);
+const trendNav=document.createElement('button');trendNav.className='ni';trendNav.dataset.tab='trends';trendNav.innerHTML='<span class="ni-pill" aria-hidden="true"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3v18h18M6 15l5-5 4 3 6-8"/></svg></span><span class="ni-lbl">Tendance prix</span>';trendNav.onclick=()=>{jump('trends');renderTrends()};document.querySelector('.nav-track').append(trendNav);
 function trendCards(){return DC.filter(d=>cardmarketLink(d))}
 function trendDate(x){return new Date(x).toLocaleString('fr-FR',{dateStyle:'short',timeStyle:'short'})}
 function renderTrends(){
