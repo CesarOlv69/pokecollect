@@ -34,6 +34,7 @@ function analyzeTrend(){
   const card=trendCards().find(d=>PriceTrends.identity(d)===trendSelected);if(!card)throw Error('Sélectionnez une carte.');
   trendPending=PriceTrends.prepare(text,card,cardmarketLink(card).url);
   const p=trendPending;
+  if(p.requiresReview){out.textContent='Relevé PSA 10 détecté. Ouvrez la fiche de cette carte pour vérifier les commentaires vendeurs et valider le relevé.';return}
   if(trendHistory.some(r=>r.id===p.id)){out.innerHTML='Ce relevé est déjà dans votre historique. <a class="cardmarket-link" href="'+esc(trendConnection()+'#'+encodeURIComponent(JSON.stringify({action:'observation',record:p})))+'">Réessayer la synchronisation Google</a>';return}
   const next=[...trendHistory,p];localStorage.setItem('pc-price-history-v1',JSON.stringify(next));trendHistory=next;trendPending=null;
   out.innerHTML=`<h3>${money(p.mean)}</h3><p>${esc(p.name)} · ${esc(p.language)} · ${esc(p.condition)}</p><p class="data-note">Enregistré sur cet appareil · ${p.count} offre(s)${p.incomplete?' · relevé partiel':''}. Votre estimation reste inchangée.</p><a class="cardmarket-link" href="${esc(trendConnection()+'#'+encodeURIComponent(JSON.stringify({action:'observation',record:p}))) }">Synchroniser avec Google Sheets ↗</a>`;
@@ -67,12 +68,13 @@ function analyzeCardTrend(card){
  const out=document.getElementById('card-trend-result');cardTrendPending=null;
  try{
  const p=PriceTrends.prepare(document.getElementById('card-trend-input').value,card,cardmarketLink(card).url);cardTrendPending=p;
- out.innerHTML=`<h3>${money(p.mean)}</h3><p>${p.count} offre(s) · ${esc(trendDate(p.capturedAt))}${p.incomplete?' · Relevé partiel':''}</p>${p.offers.map(o=>`<div class="det-row"><span>${esc(o.seller)}</span><strong>${money(o.price)}</strong></div>`).join('')}<button class="primary-action" id="card-trend-save">Enregistrer le relevé</button><p class="data-note">Le panneau Google privé s’ouvre pour écrire dans votre tableau. Cette fiche reste ouverte ; le graphique se met à jour après confirmation.</p>`;
+ out.innerHTML=`<h3>${money(p.mean)}</h3><p>${p.count} offre(s) · ${esc(trendDate(p.capturedAt))}${p.incomplete?' · Relevé partiel':''}</p>${p.offers.map(o=>`<div class="det-row"><span>${esc(o.seller)}${o.description?`<small class="data-note" style="display:block">${esc(o.description)}</small>`:''}</span><strong>${money(o.price)}</strong></div>`).join('')}${p.requiresReview?'<label class="trend-label"><input type="checkbox" id="card-psa-review"> J’ai vérifié les commentaires : les annonces concernent bien cette carte en PSA 10.</label>':''}<button class="primary-action" id="card-trend-save" ${p.requiresReview?'disabled':''}>Enregistrer le relevé</button><p class="data-note">Le panneau Google privé s’ouvre pour écrire dans votre tableau. Cette fiche reste ouverte ; le graphique se met à jour après confirmation.</p>`;
  document.getElementById('card-trend-save').onclick=()=>saveCardTrend(card,p);
+ document.getElementById('card-psa-review')?.addEventListener('change',e=>document.getElementById('card-trend-save').disabled=!e.target.checked);
  }catch(e){out.textContent=e.message}
 }
 function saveCardTrend(card,p){
- if(cardTrendPending!==p)return;
+ if(cardTrendPending!==p||(p.requiresReview&&!document.getElementById('card-psa-review')?.checked))return;
  const status=document.getElementById('card-trend-status');
  try{
  const next=[...new Map([...trendHistory,p].map(r=>[r.id,r])).values()];localStorage.setItem('pc-price-history-v1',JSON.stringify(next));trendHistory=next;
