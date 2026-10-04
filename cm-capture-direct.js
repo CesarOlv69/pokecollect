@@ -7,7 +7,7 @@ function collectCardmarketPage(doc, pageURL) {
   const attrs=el.querySelector('.product-attributes');
   const lang=[...(attrs?.querySelectorAll('[aria-label]')||[])].map(e=>e.getAttribute('aria-label')).find(s=>/^(Français|Anglais|Japonais|Coréen|French|English|Japanese|Korean)$/.test(s));
   const price=el.querySelector('.col-offer .price-container')?.textContent||el.querySelector('.mobile-offer-container .color-primary')?.textContent||'';
-  return {id:el.id,condition:el.querySelector('.article-condition')?.textContent.trim(),language:lang||'',price:price.trim(),seller:el.querySelector('.seller-name a')?.textContent.trim()||'',description:el.querySelector('.col-product')?.textContent.trim().slice(0,1200)||'',attributes:[...(attrs?.querySelectorAll('[aria-label]')||[])].map(e=>e.getAttribute('aria-label'))};
+  return {id:el.id,condition:el.querySelector('.article-condition')?.textContent.trim(),language:lang||'',price:price.trim(),seller:el.querySelector('.seller-name a')?.textContent.trim()||'',description:(el.querySelector('.product-comments .fonticon-comments')?.getAttribute('aria-label')||el.querySelector('.product-comments [data-bs-original-title]')?.getAttribute('data-bs-original-title')||el.querySelector('.product-comments')?.textContent||'').trim().slice(0,1200),attributes:[...(attrs?.querySelectorAll('[aria-label]')||[])].map(e=>e.getAttribute('aria-label'))};
  });
  if(!offers.length)throw Error('Aucune offre chargée. Attendez que Cardmarket affiche les annonces.');
  const more=doc.querySelector('#loadMoreButton');

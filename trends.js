@@ -13,7 +13,7 @@ function renderTrends(){
  document.getElementById('trend-input').addEventListener('input',()=>{clearTimeout(trendImportTimer);trendImportTimer=setTimeout(analyzeTrend,500)});
  document.querySelectorAll('[data-range]').forEach(b=>b.onclick=()=>{trendRange=b.dataset.range;document.querySelectorAll('[data-range]').forEach(x=>x.setAttribute('aria-pressed',x===b));updateTrendView()});
  document.getElementById('trend-export').onclick=()=>{const blob=new Blob([JSON.stringify(trendHistory,null,2)],{type:'application/json'});const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='pokecollect-tendances.json';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000)};
- document.getElementById('trend-script').onclick=async()=>{const status=document.getElementById('trend-script-status');try{const r=await fetch('cm-capture.js?v=20261004');if(!r.ok)throw Error();const script=await r.text();try{await navigator.clipboard.writeText(script);status.textContent='Script copié.'}catch{const t=document.createElement('textarea');t.value=script;t.setAttribute('aria-label','Script Safari à copier');status.replaceChildren(t);t.select()}}catch{status.textContent='Le script n’a pas pu être chargé. Réessayez.'}};
+ document.getElementById('trend-script').onclick=async()=>{const status=document.getElementById('trend-script-status');try{const r=await fetch('cm-capture.js?v=20261004-comments');if(!r.ok)throw Error();const script=await r.text();try{await navigator.clipboard.writeText(script);status.textContent='Script copié.'}catch{const t=document.createElement('textarea');t.value=script;t.setAttribute('aria-label','Script Safari à copier');status.replaceChildren(t);t.select()}}catch{status.textContent='Le script n’a pas pu être chargé. Réessayez.'}};
  updateTrendView();
 }
 function updateTrendView(){
@@ -95,7 +95,7 @@ const trendBuildCards=buildCartes;
 buildCartes=function(){trendBuildCards();decorateTrendCards();if(trendSection.classList.contains('on')&&!document.getElementById('trend-card')?.options.length)renderTrends();};
 
 let trendImportTimer,trendSyncBusy=false,trendLastSync=0;
-function trendCardURL(card){const link=cardmarketLink(card);if(!link)return '#';const u=new URL(link.url);const lang={fr:2,'français':2,en:1,anglais:1}[String(card.lng).trim().toLowerCase()];const state={'M/NM':2,M:2,MINT:2,NM:2,'NEAR MINT':2,EX:3,EXC:3,EXCELLENT:3,'EX/NM':3,GD:4,GOOD:4,LP:5,PL:6,PO:7}[String(card.ett).trim().toUpperCase()];if(lang)u.searchParams.set('language',lang);if(state)u.searchParams.set('minCondition',state);return u.href}
+function trendCardURL(card){const link=cardmarketLink(card);if(!link)return '#';const u=new URL(link.url);const lang={fr:2,'français':2,en:1,anglais:1,jap:7,jp:7,japonais:7,'coréen':10,ko:10}[String(card.lng).trim().toLowerCase()];const state={'PSA 10':1,PSA10:1,'M/NM':2,M:2,MINT:2,NM:2,'NEAR MINT':2,EX:3,EXC:3,EXCELLENT:3,'EX/NM':3,GD:4,GOOD:4,LP:5,PL:6,PO:7}[String(card.ett).trim().toUpperCase()];if(lang)u.searchParams.set('language',lang);if(state)u.searchParams.set('minCondition',state);return u.href}
 function trendCardSummary(card){
  const points=trendHistory.filter(p=>p.key===PriceTrends.identity(card)).sort((a,b)=>Date.parse(a.capturedAt)-Date.parse(b.capturedAt));
  const badge=`<small>${esc(card.lng)} · ${esc(card.ett)} · Cardmarket</small>`;
