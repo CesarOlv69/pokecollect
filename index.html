@@ -1555,7 +1555,7 @@ body {
 <!-- SPLASH -->
 <div id="splash">
   <div class="sp-ball">
-    <img crossorigin="anonymous" referrerpolicy="no-referrer" src="assets/pokeball.svg" alt="Poké Ball" width="112" height="112">
+    <img referrerpolicy="no-referrer" src="assets/pokeball.svg" alt="Poké Ball" width="112" height="112">
   </div>
   <div class="sp-logo"><span class="a">Poke</span><span class="b">Collect</span></div>
   <div class="sp-bar"><div></div></div>
@@ -1570,7 +1570,7 @@ body {
     <div class="hdr-row">
       <div class="brand">
         <div class="brand-ball">
-          <img crossorigin="anonymous" referrerpolicy="no-referrer" src="assets/pokeball.svg" alt="Poké Ball" width="28" height="28">
+          <img referrerpolicy="no-referrer" src="assets/pokeball.svg" alt="Poké Ball" width="28" height="28">
         </div>
         <div class="brand-text"><span class="a">Poke</span><span class="b">Collect</span></div>
       </div>
@@ -1722,7 +1722,7 @@ body {
       <div class="bt-carousel" id="btCarousel">
         <div class="bt-pack" data-id="harmonie" onclick="openBooster('harmonie')">
           <div class="bt-pack-glow"></div>
-          <div class="bt-pack-img"><img crossorigin="anonymous" referrerpolicy="no-referrer" src="booster-harmonie.jpg" alt="Booster Harmonie"></div>
+          <div class="bt-pack-img"><img referrerpolicy="no-referrer" src="booster-harmonie.jpg" alt="Booster Harmonie"></div>
           <div class="bt-pack-cta">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             Ouvrir
@@ -1730,7 +1730,7 @@ body {
         </div>
         <div class="bt-pack" data-id="elements" onclick="openBooster('elements')">
           <div class="bt-pack-glow"></div>
-          <div class="bt-pack-img"><img crossorigin="anonymous" referrerpolicy="no-referrer" src="booster-elements.jpg" alt="Booster Éléments"></div>
+          <div class="bt-pack-img"><img referrerpolicy="no-referrer" src="booster-elements.jpg" alt="Booster Éléments"></div>
           <div class="bt-pack-cta">
             <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><polygon points="5 3 19 12 5 21 5 3"/></svg>
             Ouvrir
@@ -2106,7 +2106,7 @@ function renderS() {
 function sListCard(d,i){
   const pfc=d._p>0?'bdg-g':d._p<0?'bdg-r':'bdg-gy';
   const sc=d.ven>=d.ach?'var(--g)':'var(--r-bright)';
-  const img=d.img?`<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.art)}" loading="lazy" onerror="this.style.display='none'">`:`<svg class="no-img-svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`;
+  const img=d.img?`<img referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.art)}" loading="lazy" onerror="this.style.display='none'">`:`<svg class="no-img-svg" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>`;
   return `<div class="s-list-card" onclick="openS(${i})">
     <div class="s-list-img">${img}<div class="s-list-img-qty">×${d.qty}</div></div>
     <div class="s-list-body">
@@ -2124,7 +2124,7 @@ function sListCard(d,i){
 function sGalCard(d,i){
   const pfc=d._p>0?'bdg-g':d._p<0?'bdg-r':'bdg-gy';
   const sc=d.ven>=d.ach?'var(--g)':'var(--r-bright)';
-  const img=d.img?`<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.art)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`:'';
+  const img=d.img?`<img referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.art)}" loading="lazy" onerror="this.style.display='none';this.nextElementSibling.style.display='block'">`:'';
   return `<div class="s-gal-card" onclick="openS(${i})">
     <div class="s-gal-img">
       ${img}
@@ -2208,7 +2208,7 @@ function cListCard(d,i){
   const psa=isPSA(d);
   const roi=d.ach?(d.val-d.ach)/d.ach*100:null;
   const roib=roi!==null?`<span class="bdg ${roi>=0?'bdg-g':'bdg-r'}">${pct(roi)}</span>`:'';
-  const img=d.img?`<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.nom)}" loading="lazy" onerror="this.style.display='none'">`:`<svg class="no-img-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="2" y="5" width="20" height="14" rx="2"/></svg>`;
+  const img=d.img?`<img referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.nom)}" loading="lazy" onerror="this.style.display='none'">`:`<svg class="no-img-svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="2" y="5" width="20" height="14" rx="2"/></svg>`;
   return `<div class="c-list-card" onclick="openC(${i})">
     <div class="c-list-thumb${psa?' holo':''}">${img}</div>
     <div class="c-list-info">
@@ -2228,7 +2228,7 @@ function cListCard(d,i){
 }
 function cGalCard(d,i){
   const psa=isPSA(d);
-  const img=d.img?`<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.nom)}" loading="lazy" onerror="this.style.display='none'">`:`<svg class="no-img-svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="2" y="5" width="20" height="14" rx="2"/></svg>`;
+  const img=d.img?`<img referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.nom)}" loading="lazy" onerror="this.style.display='none'">`:`<svg class="no-img-svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="1.2"><rect x="2" y="5" width="20" height="14" rx="2"/></svg>`;
   return `<div class="c-gal-card${psa?' holo':''}" onclick="openC(${i})">
     <div class="c-gal-img">${img}</div>
     <div class="c-gal-body">
@@ -2248,7 +2248,7 @@ function openS(i) {
   const pf=d.qty*d.ven-d.qty*d.ach;
   document.getElementById('shtT').textContent = d.art;
   document.getElementById('shtB').innerHTML = `
-    ${d.img?`<div class="sht-img"><img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.art)}"></div>`:''}
+    ${d.img?`<div class="sht-img"><img referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.art)}"></div>`:''}
     <div class="det-row"><span class="det-lbl">Série</span><span class="det-val">${esc(d.ser||'—')}</span></div>
     <div class="det-row"><span class="det-lbl">Quantité</span><span class="det-val">×${d.qty}</span></div>
     <div class="det-row"><span class="det-lbl">Achat unitaire</span><span class="det-val">${eu(d.ach)}</span></div>
@@ -2263,7 +2263,7 @@ function openC(i) {
   const roi=d.ach?(d.val-d.ach)/d.ach*100:null;
   document.getElementById('shtT').textContent = d.nom;
   document.getElementById('shtB').innerHTML = `
-    ${d.img?`<div class="sht-img${psa?' holo':''}"><img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.nom)}"></div>`:''}
+    ${d.img?`<div class="sht-img${psa?' holo':''}"><img referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.nom)}"></div>`:''}
     ${d.num?`<div class="det-row"><span class="det-lbl">Numéro</span><span class="det-val">#${esc(d.num)}</span></div>`:''}
     <div class="det-row"><span class="det-lbl">Série</span><span class="det-val">${esc(d.ser||'—')}</span></div>
     <div class="det-row"><span class="det-lbl">Langue</span><span class="det-val">${lngLbl(d.lng||'—')}</span></div>
@@ -2581,7 +2581,7 @@ function showStage1(boosterId) {
   document.getElementById('opSkip').style.display = 'none';
   stage.innerHTML = `
     <div class="op-pack" id="opPack" style="--pack-ratio:${boosterId==='harmonie'?408:420}/800" onclick="startTear()">
-      <img crossorigin="anonymous" referrerpolicy="no-referrer" src="${b.img}" alt="${b.name}">
+      <img referrerpolicy="no-referrer" src="${b.img}" alt="${b.name}">
       <div class="pack-strip" style="background-image:url('${b.img}')"></div>
     </div>`;
 }
@@ -2650,10 +2650,10 @@ function showStage2() {
     const isNew = _opNewKeys.includes(cardKey(c));
     el.innerHTML = `
       <div class="op-card-face op-card-back">
-        <img crossorigin="anonymous" referrerpolicy="no-referrer" src="assets/card-back.jpg" alt="Dos de carte Pokémon" draggable="false">
+        <img referrerpolicy="no-referrer" src="assets/card-back.jpg" alt="Dos de carte Pokémon" draggable="false">
       </div>
       <div class="op-card-face op-card-front">
-        ${c.img ? `<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(c.img)}" alt="${esc(c.nom)}" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><div class="card-image-fallback" hidden><span>Visuel indisponible</span><strong>${esc(c.nom)}</strong><small>${esc(c.ser||'')}</small></div>` : `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#666"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="5" width="20" height="14" rx="2"/></svg></div>`}
+        ${c.img ? `<img referrerpolicy="no-referrer" src="${esc(c.img)}" alt="${esc(c.nom)}" onerror="this.hidden=true;this.nextElementSibling.hidden=false"><div class="card-image-fallback" hidden><span>Visuel indisponible</span><strong>${esc(c.nom)}</strong><small>${esc(c.ser||'')}</small></div>` : `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;color:#666"><svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="2" y="5" width="20" height="14" rx="2"/></svg></div>`}
       </div>
       <div class="op-card-info">
         <div class="op-ci-name">${esc(c.nom)}</div>
@@ -2765,7 +2765,7 @@ function showSummary() {
         ${_opCards.map(c => {
           const isNew = _opNewKeys.includes(cardKey(c));
           return `<div class="op-sum-mini rarity-${c._r}${isNew?' is-new':''}">
-            ${c.img ? `<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(c.img)}" alt="">` : ''}
+            ${c.img ? `<img referrerpolicy="no-referrer" src="${esc(c.img)}" alt="">` : ''}
           </div>`;
         }).join('')}
       </div>
@@ -2832,7 +2832,7 @@ function renderBC() {
     <div class="bc-grid">
       ${items.map(i => `
         <div class="bc-card rarity-${i.card._r}" onclick="openBCDetail(${attr(i.key)})">
-          ${i.card.img ? `<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(i.card.img)}" alt="${esc(i.card.nom)}" loading="lazy">` : ''}
+          ${i.card.img ? `<img referrerpolicy="no-referrer" src="${esc(i.card.img)}" alt="${esc(i.card.nom)}" loading="lazy">` : ''}
           ${i.count > 1 ? `<div class="bc-card-cnt">×${i.count}</div>` : ''}
           <div class="bc-card-rar" style="color:${i.card._r==='common'?'#BDBDBD':i.card._r==='uncommon'?'#4DD0E1':i.card._r==='rare'?'#64B5F6':i.card._r==='ultra'?'#FFD600':'#FF66E0'}">${RAR[i.card._r].lbl}</div>
         </div>
@@ -2848,7 +2848,7 @@ function openBCDetail(key) {
   document.getElementById('shtT').textContent = c.nom;
   const date = d => new Date(d).toLocaleDateString('fr-FR', {day:'2-digit', month:'short', hour:'2-digit', minute:'2-digit'});
   document.getElementById('shtB').innerHTML = `
-    ${c.img ? `<div class="sht-img"><img crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(c.img)}" alt="${esc(c.nom)}"></div>` : ''}
+    ${c.img ? `<div class="sht-img"><img referrerpolicy="no-referrer" src="${esc(c.img)}" alt="${esc(c.nom)}"></div>` : ''}
     <div class="det-row"><span class="det-lbl">Rareté</span><span class="det-val"><span class="op-ci-bdg ${c._r}" style="font-size:10px;padding:3px 10px">${RAR[c._r].lbl}</span></span></div>
     ${c.num?`<div class="det-row"><span class="det-lbl">Numéro</span><span class="det-val">#${esc(c.num)}</span></div>`:''}
     ${c.ser?`<div class="det-row"><span class="det-lbl">Série</span><span class="det-val">${esc(c.ser)}</span></div>`:''}
@@ -2879,7 +2879,7 @@ function renderHist() {
   body.innerHTML = PB.history.map(h => {
     const b = BOOSTERS[h.boosterId] || { name: h.boosterId, img: '' };
     return `<div class="hist-item">
-      <div class="hist-pack">${b.img ? `<img crossorigin="anonymous" referrerpolicy="no-referrer" src="${b.img}" alt="${b.name}">` : ''}</div>
+      <div class="hist-pack">${b.img ? `<img referrerpolicy="no-referrer" src="${b.img}" alt="${b.name}">` : ''}</div>
       <div class="hist-info">
         <div class="hist-name">${b.name}</div>
         <div class="hist-date">${fmtDate(h.ts)}</div>
