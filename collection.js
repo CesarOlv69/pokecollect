@@ -12,7 +12,7 @@ function collectionMetrics(rows) {
  return {value,cost,gain:comparable-cost,roi:cost?100*(comparable-cost)/cost:null,known:known.length,missing:rows.length-known.length,qty:totalOf(rows,d=>d.qty)};
 }
 function money(v){return eu(v)}
-function pieceImage(d,cls='') {return d.img?`<img class="${cls}" crossorigin="anonymous" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.name)}" loading="lazy" onerror="this.style.visibility='hidden';this.parentElement.classList.add('image-missing')">`:'<span class="image-placeholder">Visuel indisponible</span>';}
+function pieceImage(d,cls='') {return d.img?`<img class="${cls}" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.name)}" loading="lazy" onerror="this.style.visibility='hidden';this.parentElement.classList.add('image-missing')">`:'<span class="image-placeholder">Visuel indisponible</span>';}
 function openPiece(kind,i){
  const previous=kind==='sealed'?_vs:_vc;
  try{if(kind==='sealed'){_vs=DS.map(d=>({...d,_p:d.qty*d.ven-d.qty*d.ach}));openS(i)}else{_vc=DC;openC(i)}}
