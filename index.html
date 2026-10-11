@@ -1942,15 +1942,20 @@ async function loadSheet(tab) {
   return parseCSV(await r.text());
 }
 function parseCSV(txt) {
-  return txt.trim().split('\n').map(line=>{
-    const c=[]; let cur='', inQ=false;
-    for(const ch of line) {
-      if(ch==='"') inQ=!inQ;
-      else if(ch===','&&!inQ) { c.push(cur.trim()); cur=''; }
-      else cur+=ch;
-    }
-    c.push(cur.trim()); return c;
-  });
+  const rows=[]; let row=[], cell='', quoted=false;
+  for(let i=0;i<txt.length;i++) {
+    const c=txt[i];
+    if(c==='"') {
+      if(quoted&&txt[i+1]==='"'){cell+='"';i++;}
+      else quoted=!quoted;
+    } else if(c===','&&!quoted){row.push(cell.trim());cell='';}
+    else if((c==='\n'||c==='\r')&&!quoted){
+      row.push(cell.trim());rows.push(row);row=[];cell='';
+      if(c==='\r'&&txt[i+1]==='\n')i++;
+    } else cell+=c;
+  }
+  if(cell.length||row.length){row.push(cell.trim());rows.push(row);}
+  return rows;
 }
 function parseS(rows) {
   let hi=rows.findIndex(r=>r.some(c=>(c||'').toLowerCase().includes('article'))); if(hi===-1) hi=4;
