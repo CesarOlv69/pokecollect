@@ -470,6 +470,7 @@ function cardmarketNormalize(value){return String(value||'').normalize('NFKC').t
 function cardmarketKey(d){return [d.nom,d.num,d.ser,d.lng].map(cardmarketNormalize).join('|')}
 const cardmarketIndex=new Map(cardmarketRecords.map(d=>[cardmarketKey(d),d]));
 function cardmarketLink(d){
+ if(d.kind==='sealed'){try{const u=new URL(d.cardmarket);if(u.protocol!=='https:'||!['www.cardmarket.com','cardmarket.com'].includes(u.hostname)||u.username||u.password||!/^\/[a-z]{2}\/Pokemon\/Products\/(Boosters|Booster-Boxes|Blisters|Tins|Box-Sets|Elite-Trainer-Boxes)\/[^/]+\/?$/.test(u.pathname))return null;return {url:u.href,note:/plastique/i.test(d.art||d.nom)?'Vérifiez que les annonces correspondent à votre emballage plastique.':''}}catch{return null}}
  // When the sheet contains the column, it is the sole source of links.
  if(Object.prototype.hasOwnProperty.call(d,'cardmarket')){
   try{

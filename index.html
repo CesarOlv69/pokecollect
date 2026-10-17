@@ -1543,7 +1543,7 @@ body {
 </style>
 <link rel="stylesheet" href="refinement.css">
 <link rel="stylesheet" href="collection.css">
-<link rel="stylesheet" href="trends.css?v=20261004-comments">
+<link rel="stylesheet" href="trends.css?v=20261017-sealed">
 </head>
 <body>
 
@@ -1965,7 +1965,8 @@ function parseS(rows) {
     if(!art||art.length<2||/total|totaux/i.test(art)) continue;
     const qty=pn(r[3]),ach=pn(r[4]),ven=pn(r[6]);
     if(qty===0&&ach===0) continue;
-    res.push({art,ser:(r[2]||'').trim(),qty,ach,hasCost:/[0-9]/.test(String(r[4]||'')),ven,img:remoteImageURL(r[14])});
+    const headers=rows[hi].map(x=>String(x).trim().toLowerCase()); const cm= headers.findIndex(x=>x.includes('cardmarket')), lang=headers.findIndex(x=>x==='langue');
+    res.push({kind:'sealed',id:String(r[0]||'').trim(),cardmarket:cm>=0?r[cm]||'':'',lng:lang>=0&&r[lang]?r[lang]:/\b(jap|jp|japonais)\b/i.test(art)?'Jap':'Fr',art,ser:(r[2]||'').trim(),qty,ach,hasCost:/[0-9]/.test(String(r[4]||'')),ven,img:remoteImageURL(r[14])});
   }
   return res;
 }
@@ -2917,6 +2918,6 @@ addEventListener('DOMContentLoaded', () => {
 <script src="cardmarket.js"></script>
 <script src="collection.js"></script>
 <script src="trends-core.js?v=variants-2"></script>
-<script src="trends.js?v=20261004-comments"></script>
+<script src="trends.js?v=20261017-sealed"></script>
 </body>
 </html>

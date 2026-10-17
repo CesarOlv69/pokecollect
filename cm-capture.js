@@ -2,7 +2,7 @@
    Reads displayed offers only. No network requests or account access. */
 function collectCardmarketPage(doc, pageURL) {
  const u=new URL(pageURL);
- if(u.protocol!=='https:'||!['www.cardmarket.com','cardmarket.com'].includes(u.hostname)||!/^\/[a-z]{2}\/Pokemon\/Products\/Singles\//.test(u.pathname))throw Error('Ouvrez une fiche carte Pokémon sur Cardmarket.');
+ if(u.protocol!=='https:'||!['www.cardmarket.com','cardmarket.com'].includes(u.hostname)||!/^\/[a-z]{2}\/Pokemon\/Products\/(?:Singles|Boosters|Booster-Boxes|Blisters|Tins|Box-Sets|Elite-Trainer-Boxes)\//.test(u.pathname))throw Error('Ouvrez une fiche carte ou produit scellé Pokémon sur Cardmarket.');
  const offers=[...doc.querySelectorAll('.article-row')].map(el=>{
   const attrs=el.querySelector('.product-attributes');
   const lang=[...(attrs?.querySelectorAll('[aria-label]')||[])].map(e=>e.getAttribute('aria-label')).find(s=>/^(Français|Anglais|Japonais|Coréen|French|English|Japanese|Korean)$/.test(s));
