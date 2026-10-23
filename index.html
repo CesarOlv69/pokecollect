@@ -1985,7 +1985,8 @@ function parseC(rows) {
 }
 
 function remoteImageURL(value) {
-  const url = (value || '').trim();
+  const raw = (value || '').trim();
+  const url = raw === 'https://product-images.s3.cardmarket.com/1015/891488/891488.jpg' ? 'https://www.pokevalues.com/cards/716802_400.jpg' : raw;
   const match = url.match(/^https:\/\/lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/);
   return match ? `https://lh3.googleusercontent.com/d/${match[1]}=w1000` : url;
 }
@@ -2919,6 +2920,6 @@ addEventListener('DOMContentLoaded', () => {
 <script src="collection.js"></script>
 <script src="trends-core.js?v=20261017-sealed"></script>
 <script src="trends.js?v=20261017-sealed-graphs"></script>
-<link rel="stylesheet" href="ajout.css?v=20261023-tab"><script src="ajout.js?v=20261023-tab"></script>
+<link rel="stylesheet" href="ajout.css?v=20261023-tab"><script src="ajout.js?v=20261024-photo"></script>
 </body>
 </html>
