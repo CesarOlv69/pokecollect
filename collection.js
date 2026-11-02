@@ -12,7 +12,7 @@ function collectionMetrics(rows) {
  return {value,cost,gain:comparable-cost,roi:cost?100*(comparable-cost)/cost:null,known:known.length,missing:rows.length-known.length,qty:totalOf(rows,d=>d.qty)};
 }
 function money(v){return eu(v)}
-function pieceImage(d,cls='') {return d.img?`<img class="${cls}" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.name)}" loading="lazy" onerror="this.style.visibility='hidden';this.parentElement.classList.add('image-missing')">`:'<span class="image-placeholder">Visuel indisponible</span>';}
+function pieceImage(d,cls='') {return d.img?`<img class="${cls}" referrerpolicy="no-referrer" src="${esc(d.img)}" alt="${esc(d.name)}" loading="lazy" onerror="retryCollectionImage(this)">`:'<span class="image-placeholder">Visuel indisponible</span>';}
 function openPiece(kind,i){
  const previous=kind==='sealed'?_vs:_vc;
  try{if(kind==='sealed'){_vs=DS.map(d=>({...d,_p:d.qty*d.ven-d.qty*d.ach}));openS(i)}else{_vc=DC;openC(i)}}
@@ -100,3 +100,5 @@ openC=function(i){
  const link=cardmarketLink(d);
  document.getElementById('shtB').insertAdjacentHTML('beforeend',`<div class="det-row"><span class="det-lbl">Bénéfice potentiel / carte</span><span class="det-val">${money(d.val-(d.ach||0))}</span></div>${link?`<a class="cardmarket-link" href="${esc(link.url)}" target="_blank" rel="noopener noreferrer">Voir sur Cardmarket <span>↗</span></a>${link.note?`<p class="cardmarket-note">${esc(link.note)}</p>`:''}`:'<p class="cardmarket-note">Aucun lien Cardmarket renseigné.</p>'}`);
 };
+
+function retryCollectionImage(img){if(!img.dataset.retry){img.dataset.retry='1';const src=img.src;setTimeout(()=>{if(img.isConnected)img.src=src},1200);return}img.style.visibility='hidden';img.parentElement.classList.add('image-missing');if(!img.parentElement.querySelector('.image-placeholder')){const text=document.createElement('span');text.className='image-placeholder';text.textContent='Photo temporairement indisponible';img.after(text)}}

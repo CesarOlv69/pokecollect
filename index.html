@@ -1985,7 +1985,10 @@ function parseC(rows) {
 }
 
 function remoteImageURL(value) {
-  const raw = (value || '').trim();
+  const original = (value || '').trim();
+  const neo = original.match(/^https:\/\/static\.dextcg\.com\/cards\/jpn_neop2(?:%2F|\/)([1-9])\.png$/i);
+  const ids={1:607845,2:607844,3:607846,4:607843,5:607848,6:607847,7:607842,8:607841,9:607840};
+  const raw=neo?'https://tcgplayer-cdn.tcgplayer.com/product/'+ids[neo[1]]+'_200w.jpg':original;
   const url = raw === 'https://product-images.s3.cardmarket.com/1015/891488/891488.jpg' ? 'https://www.pokevalues.com/cards/716802_400.jpg' : raw;
   const match = url.match(/^https:\/\/lh3\.googleusercontent\.com\/d\/([a-zA-Z0-9_-]+)/);
   return match ? `https://lh3.googleusercontent.com/d/${match[1]}=w1000` : url;
@@ -2917,9 +2920,9 @@ addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <script src="cardmarket.js?v=20261017-sealed"></script>
-<script src="collection.js"></script>
+<script src="collection.js?v=20261102-fix"></script>
 <script src="trends-core.js?v=20261017-sealed"></script>
 <script src="trends.js?v=20261017-sealed-graphs"></script>
-<link rel="stylesheet" href="ajout.css?v=20261023-tab"><script src="ajout.js?v=20261024-photo"></script>
+<link rel="stylesheet" href="ajout.css?v=20261102-fix"><script src="ajout.js?v=20261102-fix"></script>
 </body>
 </html>
